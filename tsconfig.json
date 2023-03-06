@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "jsx": "react"
+  },
+  "include": ["*.tsx"],
+  "exclude": ["src/**/*.spec.ts", "node_modules"]
+}
