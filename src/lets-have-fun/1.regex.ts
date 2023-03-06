@@ -21,11 +21,6 @@ const asdf = tsRegex("(.*): (.*)", "foo: bar");
 
 console.log(asdf)
 
-
-
-
-
-
 // const b = tsRegex("(.*): (.*)", "foo: bar");
 
 // type A = "(asdf)" extends `${infer First}${infer Rest}` ? Rest : never;
