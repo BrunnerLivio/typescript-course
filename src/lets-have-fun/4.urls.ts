@@ -1,37 +1,32 @@
 type Protocol = `http` | "https";
 type Domain = `ch` | "com" | "org" | "net" | "de" | "ch" | "io" | "es";
 
-type Arr<N extends number, T extends any[] = []> = T["length"] extends N
-  ? T
-  : Arr<N, [...T, any]>;
-type Inc<N extends number> = [...Arr<N>, any]["length"];
-
 type BasicUrl = `${Protocol}://${string}.${Domain}${string}`;
 type Path<
-  T extends string,
-  Target extends number,
+  TPath extends string,
+  TIndex extends number,
   Curr extends string = ``,
   Output extends string[] = [],
-  Return extends boolean = false
-> = Return extends true
-  ? Output[Target]
-  : T extends `${infer First}${infer Rest}`
+> =  TPath extends `${infer First}${infer Rest}`
   ? First extends "/"
-    ? Path<Rest, Target, ``, [...Output, Curr]>
-    : Path<Rest, Target, `${Curr}${First}`, Output>
-  : Path<"", Target, ``, [...Output, Curr], true>;
+    ? Path<Rest, TIndex, ``, [...Output, Curr]>
+    : Path<Rest, TIndex, `${Curr}${First}`, Output>
+  : [...Output, Curr][TIndex];
 
-type Url<T extends string, Target extends number> = T extends BasicUrl
-  ? T extends `${BasicUrl}/${infer PathRest}`
-    ? Path<PathRest, Target>
+type Url<TUrl extends string, TIndex extends number> = TUrl extends BasicUrl
+  ? TUrl extends `${BasicUrl}/${infer PathRest}`
+    ? Path<PathRest, TIndex>
     : ""
   : never;
 
 type Urls = Url<"https://www.google.com/search/asdf", 0>;
 
-function getPath<U extends string, T extends number>(url: U, index: T) {
+function getPath<TUrl extends string, TIndex extends number>(
+  url: TUrl,
+  index: TIndex
+) {
   const split = url.split("/");
-  return split[index] as Url<U, T>;
+  return split[index] as Url<TUrl, TIndex>;
 }
 
-const a = getPath("http://asdf.ch/asdf/qwer", 0);
+const a = getPath("http://qwer.ch/user/search", 1);
